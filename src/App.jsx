@@ -32,7 +32,7 @@ function Scene({ onModelLoaded }) {
   const path = "/summer_house_ruin.glb"; 
   const gltf = useLoader(GLTFLoader, path, loader => {
     const dracoLoader = new DRACOLoader();
-    dracoLoader.setDecoderPath('/draco/'); // Path to your hosted Draco files
+    dracoLoader.setDecoderPath('/draco/'); 
     loader.setDRACOLoader(dracoLoader);
     console.log("Draco Loader configured:", dracoLoader);
   });
@@ -54,7 +54,7 @@ export default function App() {
 
   useEffect(() => {
     console.log("Fetching model...");
-    const originalPath = "/summer_house_ruin.glb"; // No need for "./" if it's in public
+    const originalPath = "/summer_house_ruin.glb"; 
 
     fetch(originalPath)
       .then(response => {
@@ -67,7 +67,7 @@ export default function App() {
         setOriginalSize(blob.size);
         const originalName = getFileNameFromPath(originalPath);
         setOriginalModelName(originalName);
-        console.log("Original Model Size (bytes): ", blob.size);
+        console.log("Size of Loaded Model (bytes): ", blob.size);
       })
       .catch(error => {
         console.error(`Error fetching the model from ${originalPath}:`, error);
