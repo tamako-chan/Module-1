@@ -34,10 +34,12 @@ function Scene({ onModelLoaded }) {
     const dracoLoader = new DRACOLoader();
     dracoLoader.setDecoderPath('https://www.gstatic.com/draco/versioned/decoders/1.5.7/');
     loader.setDRACOLoader(dracoLoader);
+    console.log("Draco Loader configured:", dracoLoader);
   });
 
   useEffect(() => {
     if (gltf) {
+      console.log("GLTF model loaded:", gltf);
       onModelLoaded(gltf);
     }
   }, [gltf, onModelLoaded]);
@@ -76,7 +78,7 @@ export default function App() {
     if (modelLoadedRef.current || originalSize === null) {
       return;
     }
-    console.log('Draco Compression ...')
+    console.log('Draco Compression ...');
     modelLoadedRef.current = true;
     try {
       const originalPath = "/summer_house_ruin.glb"; 
