@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Canvas, useLoader } from "@react-three/fiber";
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
-import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js';
 import { OrbitControls, Stats } from "@react-three/drei";
-import { GLTFExporter } from 'three/examples/jsm/exporters/GLTFExporter';
+import { GLTFExporter } from 'three/examples/jsm/exporters/GLTFExporter.js';
 import { saveAs } from 'file-saver';
 import "./App.css";
 
@@ -32,7 +32,7 @@ function Scene({ onModelLoaded }) {
   const path = "/summer_house_ruin.glb"; 
   const gltf = useLoader(GLTFLoader, path, loader => {
     const dracoLoader = new DRACOLoader();
-    dracoLoader.setDecoderPath('https://www.gstatic.com/draco/versioned/decoders/1.5.7/');
+    dracoLoader.setDecoderPath('/draco/'); // Path to your hosted Draco files
     loader.setDRACOLoader(dracoLoader);
     console.log("Draco Loader configured:", dracoLoader);
   });
@@ -67,7 +67,7 @@ export default function App() {
         setOriginalSize(blob.size);
         const originalName = getFileNameFromPath(originalPath);
         setOriginalModelName(originalName);
-        console.log("Size of Uploaded Model (bytes): ", blob.size);
+        console.log("Original Model Size (bytes): ", blob.size);
       })
       .catch(error => {
         console.error(`Error fetching the model from ${originalPath}:`, error);
