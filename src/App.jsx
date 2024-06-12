@@ -29,7 +29,7 @@ async function compressAndExportGLTF(gltf, fileName) {
 }
 
 function Scene({ onModelLoaded }) {
-  const path = "./summer_house_ruin.glb"; 
+  const path = "/summer_house_ruin.glb"; 
   const gltf = useLoader(GLTFLoader, path, loader => {
     const dracoLoader = new DRACOLoader();
     dracoLoader.setDecoderPath('https://www.gstatic.com/draco/versioned/decoders/1.5.7/');
@@ -51,15 +51,21 @@ export default function App() {
   const [originalModelName, setOriginalModelName] = useState("");
 
   useEffect(() => {
-    const originalPath = "./summer_house_ruin.glb"; 
+    console.log("Fetching model...");
+    const originalPath = "/summer_house_ruin.glb"; // No need for "./" if it's in public
 
     fetch(originalPath)
-      .then(response => response.blob())
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`Network response was not ok: ${response.statusText}`);
+        }
+        return response.blob();
+      })
       .then(blob => {
         setOriginalSize(blob.size);
         const originalName = getFileNameFromPath(originalPath);
         setOriginalModelName(originalName);
-        console.log("Original Model Size (bytes): ", blob.size);
+        console.log("Size of Uploaded Model (bytes): ", blob.size);
       })
       .catch(error => {
         console.error(`Error fetching the model from ${originalPath}:`, error);
@@ -73,7 +79,7 @@ export default function App() {
     console.log('Draco Compression ...')
     modelLoadedRef.current = true;
     try {
-      const originalPath = "./summer_house_ruin.glb"; 
+      const originalPath = "/summer_house_ruin.glb"; 
       const originalName = getFileNameFromPath(originalPath);
       const compressedFileName = `${originalName.split('.glb')[0]}_compressed.glb`;
       const compressedBlob = await compressAndExportGLTF(gltf, compressedFileName);
